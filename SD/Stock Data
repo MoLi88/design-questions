@@ -1,0 +1,13 @@
+// 9.1 Stock Data: Imagine you are buidling some sort of service that will be called up to 1,000 client applications to get simple end-of-day stock price information(open, close, high, low). You may assume that you already have the data, and you can store it in any format you wish. How would yuou design the client-facing service that provides information to client applications? You are responsivle for the development, rollout, and ongoing and maintenance of the feed. Describe the different methods you considered and why you would recommend your approach. Your service can use any technologies you wish, and can distribute the information to the client applications in any mechanism you choose.
+
+#1 keep text files and user could download through some FTP server
+pros: easy to maintain and implement
+cons: require complex parsing, adding addtional data might break client sides's parsing
+
+#2 Standard SQL database
+pros: a.easy to query data(to support additional features), b.rolling back data, backing up data and security could be provided using standard database features, c. easy for clients to integrate
+cons: much heavier weight than we need, difficult for human to read, need to prevent expensive queries
+
+#3 XML
+pros: easy to distribute, easy for both machine and human to read, easy to parse, adding new data won't break client side's parser, easy to back up
+cons: sends all information(inefficient), performing queries on data would requires parsing the entire file
