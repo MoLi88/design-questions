@@ -1,0 +1,19 @@
+Optimization: Reduce machine jumps
+instead of randomly jumping from machine to machine with each friend, try batch these jumps
+
+Optimization: Smart division of people and machines
+rather than divide people across machines, divide them by country, city, zip
+
+
+Question: BFS usually requires "marking" a node as vidited, how do you do that in this case?
+not set flag in its node class, do a hash Throwable
+
+
+Other follow-up questions
+1. in the real world, server fail, how does this affect you?
+slave server serve as backup, won't have difference
+if all shards fail, not accesible data, 404
+2. How could you take advantage of caching?
+
+3. Do you search until the end of the graph? How do you decide when to give up?
+4. In real life, some people have more friends than others, more likely to make a path between you and someone else. How could you use this data to pick where start traversing?
