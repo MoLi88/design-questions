@@ -1,0 +1,18 @@
+9.3 Web Crawler: if you were designing a web crawler, how would you avoid getting into infinite loops?
+
+1. create a hash table where we set hash[v] to true after we visit page v.
+We can crawl the web using BFS, if already visited then ignore(not enqueue), but how to define visited?
+using url, different params might be same or different page
+using content, what if the content not always the same
+
+2. If based on the content and URL, a page is deemed to be sufficiently similar to other pages, we deprioritize crawling its children. For each page, we would come up with some sort of signature based on snippets of the content and page's URL.
+
+We have a database which stores a list of items we need to crawl. On each iteration, we select the highest priority page to crawl. Then
+a. Open up the page and create a signature of the page based on specific subsections of the page and its URL
+b. Query the database to see whether anything with this signature has been crawed recently
+c. If something with this signature has been recently crawled, insert this page back into the database at a low priority
+d. if not, crawl the page and insert its links into the database
+
+
+
+

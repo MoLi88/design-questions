@@ -16,4 +16,5 @@ if all shards fail, not accesible data, 404
 2. How could you take advantage of caching?
 
 3. Do you search until the end of the graph? How do you decide when to give up?
+reach certain levels, total friends
 4. In real life, some people have more friends than others, more likely to make a path between you and someone else. How could you use this data to pick where start traversing?
