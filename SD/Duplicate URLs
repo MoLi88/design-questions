@@ -1,0 +1,15 @@
+9.4 Duplicate URLs: You have 10 billion URLs. How do you detect the duplicate documents? In this case, assume "duplicate" means that the URLs are identical.
+
+Solution:
+create a hash table where each URL maps to true if it's already been found elsewhere
+
+Solution1: Disk Storage
+if we stored all the data on one machine, we would do two passes of the document. The first pass would split the list of URLs into 4000 chuncks of 1GB each. An easy way to do that might be to store each URL u in a file named <x>.txt where x = hash(u) % 4000. That is we divide up the URLs based on their hash value(modulo the number of chunks) This way, all URLs with the same hash value would be in the same file.
+In the second pass, we would essentially implement the simple solution we came up with earlier: load each file into memory, create a hash table of the URLs and look for duplicates.
+
+Solution2: Multiple Machines
+The other solution is to perform same procedures but to use multiple machines. In this solution, rather than storing the data in file<x>.txt, we would send the URL to machine x.
+
+pro: we can parallelize the operation, such that all 4000 chunks are processed simultaneously=> faster
+cons: relying on 4000 different machines to operate perfectly => not realistic => handle failure. Increased the complexity.
+

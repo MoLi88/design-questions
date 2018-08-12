@@ -14,5 +14,4 @@ c. If something with this signature has been recently crawled, insert this page 
 d. if not, crawl the page and insert its links into the database
 
 
-
-
+signature: host, route, params, header, image, text ==> score
