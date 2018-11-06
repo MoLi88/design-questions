@@ -1,0 +1,38 @@
+9.6 Sales Rank: A large eCommerce company wishes to list the best-selling products, overall and by category. For example, one product might be the #1056th best-selling product overall but the #13 best-selling product under "Sports Equipment" and the #24 best-selling product under "Safety". Describe how would you design the system.
+
+Step1: Scope the problem
+	do only last week
+	assume each product can be in multiple categories
+
+Step2: Make Reasonable Assumptions
+	data not up-to-date
+	Precision important to most popular items, errors ok for less popular
+	data updaetd every hour
+
+Step3: Main Components
+	store very order as soon as it comes into the database, every hour pull sales data from the database by category and compute, store in cache, and FE could pull
+
+Step4: Identify the key issues
+	1. Analytics are expensive
+		query all sales will be expensive => only store total sales from last week, each purchase will update the total weekly sales.
+		use circular array for sun, mon, tues...., clear out the corresponding day of the week, also a hashtable to store productID=>CategoryID
+	2. Database Writes are very frequent
+		sote purchase in some in-memory cache, periodically process the log/cache data, gather totals
+		rerun the sales rank data with no bias
+	3. Joins are expensive
+		Have potentially tens of thousands of product categories => pull data(expensive join) and then sort
+		==> do one join of products and categories ==> each product will be listed once per category, sort on category and then product id
+		==> do from beginning and only update multiple rows
+	4. Database Queries might still be expensive
+		forgoing a database entirely and just using log files ==> mapreduce
+		write a purchase to a simple txt file with product id and time stamp, each category has its own directory, and each purchase gets written to all the categories associated with that product
+			/sports equipment
+				1423, Dec 13....
+				4221, Dec 13...
+			/safety
+				1423, Dec 13...
+		get ranking ==> sort each directory
+		overall ranking ==> N way merge
+
+		divide up files across servers
+

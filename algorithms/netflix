@@ -1,0 +1,77 @@
+import java.io.*;
+import java.util.*;
+
+// Netflix is growing really fast, and we are resource bounded.
+// We want to launch a new cluster with N cpus. You are given a list of potential services applying to run on this cluster. Each service application will contain two values:
+
+//   (1) Number CPU cores it needs
+//   (2) $ this service will make for the company
+
+// You need to come up with a method to pick the services that are going to run in the new cluster, so that it generates maximum profit for Netflix. 
+
+// Test Case 1:
+
+// N = 10
+// [
+//   [9 CPUS,  $10K]
+//   [2 CPUS,   $9K]
+// ]
+
+// =>
+// [
+//      [9 CPUS, $10K]
+// ]
+
+// ----------
+// Test Case 2:
+// N = 10
+//
+// [
+//   [9 CPUS,  $10K]
+//   [2 CPUS,   $9K]  
+//   [8 CPUS,  $3K]   
+// ]
+
+// =>
+// [
+//  [2 CPUS,   $9K]
+//  [8 CPUS,  $3K]
+// ]
+
+//michaellin@netflix.com
+
+
+class Solution {
+  public static void main(String[] args) {
+    ArrayList<String> strings = new ArrayList<String>();
+    strings.add("Hello, World!");
+    strings.add("Welcome to CoderPad.");
+    strings.add("This pad is running Java " + Runtime.version().feature());
+
+    for (String string : strings) {
+      System.out.println(string);
+    }
+  }
+  
+  public static void chooseService(int availableCPU, List<Node> services, List<Node> currentServices, int index, int currentProfit) {
+    if (availableCPU < 0) return;
+    int cpu = services.get(i).cpu;
+    int price = services.get(i).price;
+    chooseService(availableCPU, services, currentServices, index+1);
+
+    chooseService(availableCPU, services, currentServices, index+1);
+  }
+  
+
+  public static int chooseService(int N, List<Node> services) {
+    List<Node> result = new LinkedList<Node>();
+    List<Node> dp = new List[];
+    int[] dp = new int[N];
+      int cpu = services.get(i).cpu;
+      int price = services.get(i).price;
+      currentServices.add(service);
+      helper(N - cpu, services, currentServices, i+1);
+      currentServices.removeLast();
+    }
+  }
+}

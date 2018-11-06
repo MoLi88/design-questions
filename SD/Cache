@@ -1,0 +1,88 @@
+9.5 Cache: imagine a web server for a simplified search engine. This system has 100 machines to respond to search queries, which may then call out using processSearch(String query) to another cluster of machines to acctually get the result. The machine which responds to given query is chosen at random, so you cannot guarantee that the same machine will always respond to the same request. The method processSearch is very expensive. Design a caching machanism to cache the results of the most recent queries. Be sure to explain how you would update the cache when data changes.
+
+Assumptions:
+	Other than calling out processSearch as necessary, all query processing happens on the initial machine that was called
+	The number of queries we wish to cache is large
+	Calling between machines is relatively quick
+	The result for a given query is an ordered list of URLS, each of which has an associated 50 chars title and 200 chars summary
+	The most popular queries are extremely popular, such that they would always appear in the Cache
+
+System Requirements:
+When designing a cache, we know we'll need to support two primary functions:
+	Efficient lookups given a key
+	Expiration of old data so that it can be replaced with new data
+	Update/clear cache for query change
+
+Step1: Single machine
+
+public class Cache {
+	public static int MAX_SIZE = 10;
+	public Node head, tail;
+	public HashMap<String, Node> map;
+	public int size = 0;
+
+	public Cache() {
+		map = new HashMap<String, Node>();
+	}
+
+	public void moveToFront(Node node) {}
+	public void moveToFront(String query) {}
+
+	public void removeFromLinkedList<Node node>{}
+
+	public String[] getResults(String query) {
+		if (!map.containsKey(query)) return null;
+		Node node = map.get(query);
+		moveToFront(node);
+		return node.results;
+	}
+
+	public void insertResults(String query, String[] results) {
+		if (map.containsKey(query)) {
+			Node node = map.get(query);
+			node.results = results;
+			moveToFront(node);
+			return;
+		}
+
+		Node node = new Node(query, results);
+		moveToFront(node);
+		map.put(query, node);
+
+		if (size > MAX_SIZE) {
+		 	map.remove(tail.query);
+		 	removeFrontLinkedList(tail);
+		}
+	}
+}
+
+Step2: Expand to Many Machines
+Popular query will not be consistently send to the same machine
+	Option1: Each machine has its own cache: 
+		pros: quick, no machine-to-machine call, less effective
+	Option2: Each machine has a copy of the cache
+		pros: common query in all cache
+		cons: N times as space, cache much less data; update data will need N machines update
+	Optiosn3: Each machine stores a segment of the cache: divide up the cache, each machine holds a different part of it
+		based on hash(query) % N ==> machine i could call machine j based on the result
+
+
+Step3: Updating results when contens change
+	1. Content at a URL changes(or moved)
+	2. Ordering of results change
+	3. New pages appear related to particular query
+
+	periodically crawl through the cache to purge queries
+	automacically timeout no matter how popular
+
+Step4: Further enhancements
+	very popular query: i send store popular query to j and cache response
+	assign query to machine based on hash value
+	timeout based on topic, some more frequently
+
+
+
+
+
+
+
